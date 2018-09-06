@@ -37,7 +37,7 @@ module BeakerAnswers
     # options[:meep_schema_version] to determine which form of pe.conf is to be
     # generated.
     def hiera_host_config
-      pe_conf = BeakerAnswers::PeConf.new(@hosts, @options[:meep_schema_version])
+      pe_conf = BeakerAnswers::PeConf.new(@hosts, @options[:meep_schema_version], @options)
       pe_conf.configuration_hash
     end
   end

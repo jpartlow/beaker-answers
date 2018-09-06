@@ -62,7 +62,7 @@ module BeakerAnswers
     end
 
     def hiera_host_config
-      pe_conf = BeakerAnswers::PeConf.new(@hosts, '1.0')
+      pe_conf = BeakerAnswers::PeConf.new(@hosts, '1.0', @options)
       pe_conf.configuration_hash
     end
 

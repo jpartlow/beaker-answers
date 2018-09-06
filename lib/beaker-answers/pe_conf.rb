@@ -84,14 +84,10 @@ module BeakerAnswers
 
       if the_host_with_role('pe_postgres', raise_error=false)
         pe_conf["#{ns}::database_host"] = the_host_with_role('pe_postgres', raise_error=false).hostname
-        if options[:pe_postgresql_options]
-          if options[:pe_postgresql_options][:security] == 'cert'
-            postgres_cert_answers(pe_conf, '1.0')
-          elsif options[:pe_postgresql_options][:security] == 'password'
-            postgres_password_answers(pe_conf, '1.0')
-          end
-        else
+        if options[:pe_postgresql_options] && options[:pe_postgresql_options][:security] == 'password'
           postgres_password_answers(pe_conf, '1.0')
+        else
+          postgres_cert_answers(pe_conf, '1.0')
         end
       end
 
@@ -135,12 +131,10 @@ module BeakerAnswers
       #Set the PE managed postgres roles/answers
       if the_host_with_role('pe_postgres', raise_error=false)
         pe_conf["puppet_enterprise::profile::database"] = the_host_with_role('pe_postgres', raise_error=false).hostname
-        if options[:pe_postgresql_options][:security]
-          if options[:pe_postgresql_options][:security] == 'cert'
-            postgres_cert_answers(pe_conf, "2.0")
-          elsif options[:pe_postgresql_options][:security] == 'password'
-            postgres_password_answers(pe_conf, "2.0")
-          end
+        if options[:pe_postgresql_options] && options[:pe_postgresql_options][:security] == 'password'
+          postgres_password_answers(pe_conf, "2.0")
+        else
+          postgres_cert_answers(pe_conf, "2.0")
         end
       end
 
